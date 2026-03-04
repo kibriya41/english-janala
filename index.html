@@ -120,12 +120,16 @@
           আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে যাবে
           অন্য একটি Level এ
         </p>
-          <input class="rounded mb-5 p-2" type="text" placeholder="Enter Your Name">
-          <br>
-          <input class="rounded mb-5 p-2" type="password" name="" id="">
-          <br>
-          <button class="btn btn-active btn-primary">Get Started</button>
-        </div>
+        <input
+          class="rounded mb-5 p-2"
+          type="text"
+          placeholder="Enter Your Name"
+        />
+        <br />
+        <input class="rounded mb-5 p-2" type="password" name="" id="" />
+        <br />
+        <button class="btn btn-active btn-primary">Get Started</button>
+      </div>
 
       <div class="image flex-1">
         <img src="english-janala-resources/assets/hero-student.png" alt="" />
@@ -133,10 +137,45 @@
     </section>
 
     <!-- Learn Vocabularies section -->
-    <section class="w-11/12 mx-auto">
-      <h2 class="font-bold text-4xl text-center"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h2>
+    <section id="" class="w-11/12 mx-auto">
+      <h2 class="font-bold text-4xl text-center mb-10">
+        <span class="text-[#00BCFF]">Let's</span> Learn Vocabularies
+      </h2>
+      <div
+        id="level-container"
+        class="flex gap-5 flex-wrap justify-center"
+      ></div>
     </section>
 
+    <!-- lesson word -->
+    <section
+      id="word-container"
+      class="bg-gray-100 p-10 w-11/12 mx-auto my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
+    >
+      <div class="text-center col-span-full py-10 space-y-3">
+        <p class="font-serif text-xl font-bangla">
+          আপনি এখনো কোন Lesson Select করেন ন
+        </p>
+        <h3 class="font-bold text-5xl font-bangla">একটি Lesson Select করুন।</h3>
+      </div>
+    </section>
+
+    <!-- Open the modal using ID.showModal() method -->
+    <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+
+    <dialog id="word_modal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+       <div id="details-container" class="p-2 space-y-6">
+        
+       </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
 
     <script src="index.js"></script>
   </body>
