@@ -1,3 +1,18 @@
+const createElements = (arr) => {
+  const htmlElements = arr.map((el) => `<span class="btn">${el}</span>`);
+  return htmlElements.join(" ");
+};
+
+const manageSpinner = (status) => {
+  if (status == true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("word-container").classList.add("hidden");
+  } else {
+    document.getElementById("word-container").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("hidden");
+  }
+};
+
 const loadLessons = () => {
   fetch("https://openapi.programming-hero.com/api/levels/all")
     .then((res) => res.json())
@@ -10,6 +25,8 @@ const removeActive = () => {
 };
 
 const loadLevelWord = (id) => {
+  manageSpinner(true);
+
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -22,32 +39,16 @@ const loadLevelWord = (id) => {
     });
 };
 
-const lodeWordDetail = async(id) => {
+const lodeWordDetail = async (id) => {
   const url = `https://openapi.programming-hero.com/api/word/${id}`;
   fetch(url)
-  .then((res) => res.json())
-  .then((wordDetails) => displayWordDetails(wordDetails.data)); 
+    .then((res) => res.json())
+    .then((wordDetails) => displayWordDetails(wordDetails.data));
 };
 
-// {
-//     "word": "Eager",
-//     "meaning": "আগ্রহী",
-//     "pronunciation": "ইগার",
-//     "level": 1,
-//     "sentence": "The kids were eager to open their gifts.",
-//     "points": 1,
-//     "partsOfSpeech": "adjective",
-//     "synonyms": [
-//         "enthusiastic",
-//         "excited",
-//         "keen"
-//     ],
-//     "id": 5
-// }
-
-displayWordDetails = (word)=>{
+displayWordDetails = (word) => {
   console.log(word);
-  
+
   const detailsContainer = document.getElementById("details-container");
   detailsContainer.innerHTML = `
       <div class="">
@@ -63,12 +64,10 @@ displayWordDetails = (word)=>{
         </div>
         <div class="">
           <h3 class="text-2xl font-semibold">সমার্থক শব্দ গুলো</h3>
-          <span class="btn"> span-2</span>
-          <span class="btn"> span-2</span>
-          <span class="btn"> span-2</span>
+          <div class="">${createElements(word.synonyms)}</div>
         </div>
-  `
-   document.getElementById("word_modal").showModal();
+  `;
+  document.getElementById("word_modal").showModal();
 };
 
 // display level word
@@ -87,7 +86,6 @@ const displayLevelWord = (words) => {
   }
 
   words.forEach((word) => {
-  
     const wordDiv = document.createElement("div");
     wordDiv.innerHTML = `
     
@@ -103,6 +101,7 @@ const displayLevelWord = (words) => {
     `;
     wordContainer.appendChild(wordDiv);
   });
+  manageSpinner(false);
 };
 
 // level btns
@@ -124,3 +123,19 @@ const displayLesson = (lessons) => {
 };
 
 loadLessons();
+
+document.getElementById("btn-search").addEventListener("click", () => {
+  removeActive();
+
+  const input = document.getElementById("input-search");
+  const searchValue = input.value.trim().toLowerCase();
+
+  fetch("https://openapi.programming-hero.com/api/words/all")
+    .then((res) => res.json())
+    .then((data) => {
+      const allWord = data.data;
+      const filterWord = allWord.filter(word => word.word.toLowerCase().includes(searchValue));
+      displayLevelWord(filterWord);
+    });
+    
+});
